@@ -3,3 +3,10 @@
     <h1>This is an about page</h1>
   </div>
 </template>
+<script></script>
+<style>
+.about {
+  background: #eee;
+  height: 100vh;
+}
+</style>

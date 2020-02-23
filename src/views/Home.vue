@@ -1,18 +1,60 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <div class="drivers">
+      <div v-for="driver in drivers" :key="driver.id">
+        <card :driver="driver" />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
-
+import axios from "axios";
+import Card from "../components/card";
 export default {
   name: "Home",
-  components: {
-    HelloWorld
+  components: { Card },
+  data() {
+    return {
+      drivers: []
+    };
+  },
+  created() {
+    axios
+      .get("http://localhost:8000/all")
+      .then(res => (this.drivers = res.data))
+      .catch(err => alert(err));
   }
 };
 </script>
+<style lang="scss" scoped>
+.home {
+  background: #eee;
+  min-height: 100vh;
+  padding: 20px 100px 30px 100px;
+  margin: 10px;
+}
+.drivers {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 6em;
+
+}
+@media (max-width: 1360px) {
+  .drivers {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 900px) {
+  .drivers {
+    padding: 20px 50px 30px 50px;
+    grid-gap: 2em;
+  }
+}
+@media (max-width: 600px) {
+  .drivers {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
