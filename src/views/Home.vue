@@ -32,6 +32,7 @@ export default {
 .home {
   background: #eee;
   min-height: 100vh;
+
   padding: 20px 100px 30px 100px;
   margin: 10px;
 }
@@ -53,8 +54,13 @@ export default {
   }
 }
 @media (max-width: 600px) {
+  .home {
+    padding: 0px;
+  }
   .drivers {
+    padding: 20px 0px 30px 0px;
     grid-template-columns: 1fr;
   }
+
 }
 </style>

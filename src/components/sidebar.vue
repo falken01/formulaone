@@ -28,6 +28,7 @@ export default {
 <style lang="scss" scoped>
 .sidebar {
   position: absolute;
+  z-index: 2;
   height: 100vh;
   width: 300px;
   padding: 30px;

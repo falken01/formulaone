@@ -4,10 +4,10 @@
     <div class="others">
       <div v-for="driver in remainingDrivers" :key="driver.id">
         <router-link
-          :to="{
-            name: 'driverType',
-            params: { team: driver.Team.name }
-          }"
+                :to="{
+          name: 'driver',
+          params: { driver: driver.Surname, id: driver.id }
+        }"
         >
           <card :driver="driver" />
         </router-link>
