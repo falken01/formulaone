@@ -19,7 +19,7 @@ export default {
 $imgsize: 120px;
 nav {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr 2fr 14fr;
+  grid-template-columns: 1fr 2fr 2fr 2fr 12fr;
   padding: 5px;
   background: #ccc;
   box-shadow: 2px 2px 6px;

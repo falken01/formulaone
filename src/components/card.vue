@@ -8,7 +8,7 @@
           <div>
             <img
               alt="kierowca"
-              :src="require(`@/assets/${driver.Surname}.png`)"
+              :src="require(`C:\\symfProjects\\formulaonebackend\\public\\uploads/${driver.Surname}`)"
             />
           </div>
           <div></div>

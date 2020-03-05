@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <preloader v-show="this.loadingData"/>
     <div class="drivers">
       <div v-for="driver in drivers" :key="driver.id">
         <card :driver="driver" />
@@ -12,19 +13,21 @@
 // @ is an alias to /src
 import axios from "axios";
 import Card from "../components/card";
+import Preloader from "../components/preloader";
 export default {
   name: "Home",
-  components: { Card },
-  data() {
-    return {
-      drivers: []
-    };
+  components: {Preloader, Card },
+  computed: {
+    drivers(){
+      return store.state.drivers
+    }
   },
   created() {
     axios
       .get("http://localhost:8000/all")
-      .then(res => (this.drivers = res.data))
+      .then(res => (store.commit('setDrivers') = res.data))
       .catch(err => alert(err));
+      this.loadingData=false;
   }
 };
 </script>

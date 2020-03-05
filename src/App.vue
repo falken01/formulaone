@@ -5,7 +5,7 @@
       <sidebar v-if="isSeen" :drivers="drivers" @typing="dataFilter" />
     </transition>
     <transition name="fade" type="out-in">
-      <router-view :key="$route.path"/>
+      <router-view :key="$route.path" />
     </transition>
     <footer>Formula 1</footer>
   </div>
@@ -20,14 +20,12 @@ export default {
   data() {
     return {
       isSeen: false,
-      drivers: [],
-
+      drivers: []
     };
   },
   watch: {
     $route() {
       this.isSeen = false;
-
     }
   },
   methods: {
@@ -43,7 +41,7 @@ export default {
   created() {
     axios
       .get("http://localhost:8000/all")
-      .then(res => this.drivers = res.data)
+      .then(res => (this.drivers = res.data))
       .catch(err => alert(err));
   }
 };
@@ -61,7 +59,6 @@ body {
   text-align: center;
   color: #2c3e50;
   background: #eee;
-  font-family: Poppins;
 
   footer {
     display: grid;
