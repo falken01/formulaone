@@ -1,6 +1,6 @@
 <template>
   <div class="ext">
-    xDDhtr
+
   </div>
 </template>
 
@@ -23,7 +23,7 @@ export default {
     axios
       .get("http://localhost:8000/all")
       .then(res => (this.remainingDrivers = (res.data.filter(dr => dr.Team !== this.team))))
-      .catch(err => alert(err));
+      .catch(err => console.log(err));
   }
 };
 </script>

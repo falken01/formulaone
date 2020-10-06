@@ -1,26 +1,38 @@
 <template>
   <div class="driverDetails">
-    <div class="driverInfo">
-      <img
-        width="100%"
-        :title="driverDetails.Team.name"
-        :src="require(`@/assets/${driverDetails.Team.name}.png`)"
-      />
-      <div id="mid">
+    <div v-if="driverDetails" class="driverInfo">
+      <div class="driverData">
         <h1>{{ driverDetails.Name }} {{ driverDetails.Surname }}</h1>
-
+        <img
+          class="driverImage"
+          :title="driver"
+          :src="require(`@/assets/${driverDetails.Surname}.png`)"
+        />
+        <img
+          class="carImage"
+          :title="driverDetails.NameTeam"
+          :src="require(`@/assets/${driverDetails.NameTeam}.png`)"
+        />
       </div>
-      <img
-        :title="driver"
-        :src="require(`@/assets/${driverDetails.Surname}.png`)"
-      />
-      <div><h2>2</h2></div>
-      <div><h1>2</h1></div>
-      <div><h2>2</h2></div>
-      <div><h2>Points</h2></div>
-      <div><h1>Wins</h1></div>
-      <div><h2>Races</h2></div>
-
+      <div class="chart">
+        <doughnut-chart
+          :FirstPlaces="driverDetails.FirstPlaces"
+          :SecondPlaces="driverDetails.SecondPlaces"
+          :ThirdPlaces="driverDetails.ThirdPlaces"
+        />
+        <h2>Podium</h2>
+      </div>
+      <div class="chart">
+        <bar-chart :points="pointsChart" />
+        <h2>Punkty</h2>
+      </div>
+      <div class="chart">
+        <radar-chart :Poles="PolesFetch" />
+      </div>
+      <div class="chart">
+        <pie-chart :apperances="apperancesFetch" />
+        <h2>Występy</h2>
+      </div>
       <other-drivers
         class="other-drivers"
         :driverId="driverDetails.id"
@@ -31,15 +43,25 @@
 </template>
 
 <script>
-import axios from "axios";
 import OtherDrivers from "../components/OtherDrivers";
+import { mapGetters } from "vuex";
+import DoughnutChart from "../components/doughnutChart";
+import BarChart from "../components/barChart";
+import PieChart from "../components/PieChart";
+import RadarChart from "../components/RadarChart";
 
 export default {
   name: "DriverDetails",
-  components: { OtherDrivers },
+  components: {
+    RadarChart,
+    BarChart,
+    DoughnutChart,
+    OtherDrivers,
+    PieChart
+  },
   data() {
     return {
-      drivers: []
+      loading: true
     };
   },
   props: {
@@ -49,16 +71,20 @@ export default {
     }
   },
   computed: {
-    driverDetails() {
-      return this.drivers.find(dr => dr.Surname === this.driver);
-    }
+    ...mapGetters("driver", [
+      "driverDetails",
+      "pointsChart",
+      "apperancesFetch",
+      "PolesFetch"
+    ])
   },
 
   created() {
-    axios
-      .get("http://localhost:8000/all")
-      .then(res => (this.drivers = res.data))
-      .catch(err => alert(err));
+    console.log(this.driver);
+    this.loading = true;
+    this.$store
+      .dispatch("driver/fetchDriver", this.driver)
+      .then(() => (this.loading = false));
   }
 };
 </script>
@@ -71,14 +97,47 @@ export default {
   padding: 20px 100px 30px 100px;
   .driverInfo {
     display: grid;
-    grid-gap: 1em;
-    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-columns: 2fr 1fr 1fr;
+    .driverData {
+      display: grid;
+      grid-row: 1/3;
+      img {
+        margin-right: auto;
+        margin-left: auto;
+        width: 300px;
+        height: auto;
+      }
+      .driverImage {
+        width: 250px;
+        height: auto;
+      }
+    }
+  }
+  h2 {
+    text-align: center;
   }
   .other-drivers {
     grid-column: 1/4;
   }
   #mid {
     display: grid;
+  }
+  @media (max-width: 900px) {
+    .driverInfo {
+      grid-template-columns: 1fr;
+    }
+
+    .driverData {
+      grid-column: 1/2;
+    }
+    .other-drivers {
+      grid-column: 1/2;
+    }
+  }
+}
+@media (max-width: 750px) {
+  .driverDetails {
+    padding: 0;
   }
 }
 </style>

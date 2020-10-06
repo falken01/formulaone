@@ -9,23 +9,19 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home
+    component: Home,
   },
   {
     path: "/about",
     name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
+
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue")
   },
   {
     path: "/addDriver",
     name: "AddDriver",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
+
     component: () =>
         import(/* webpackChunkName: "addDriver" */ "../views/AddDriver.vue")
   },
@@ -54,7 +50,7 @@ const routes = [
       axios
           .get("http://localhost:8000/all")
           .then(res => (exists = (res.data.find( el => el.Surname === to.params.driver))))
-          .catch(err => alert(err));
+          ;
 
       if (exists) {
         next();

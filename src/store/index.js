@@ -1,21 +1,15 @@
 import Vuex from "vuex";
 import Vue from "vue";
+import * as driver from "./modules/driver.js";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {
-    drivers: []
+  modules: {
+    driver
   },
-  getters: {
-    driversCount() {}
-  },
-  actions: {
-    fetchDrivers() {}
-  },
-  mutations: {
-    setDrivers(state, drivers) {
-        state.drivers = drivers
-    }
-  }
+  state: {},
+  getters: {},
+  actions: {},
+  mutations: {}
 });

@@ -8,7 +8,7 @@
           <div>
             <img
               alt="kierowca"
-              :src="require(`C:\\symfProjects\\formulaonebackend\\public\\uploads/${driver.Surname}`)"
+              :src="require(`@/assets/${driver.Surname}.png`)"
             />
           </div>
           <div></div>
@@ -18,7 +18,7 @@
     </div>
     <div class="data">
       <div class="name">{{ driver.Name }} {{ driver.Surname }}</div>
-      <div class="team">{{ driver.Team.name }}</div>
+      <div class="team">{{ driver.NameTeam }}</div>
       <div class="Number">No {{ driver.Number }}</div>
       <div class="Country">{{ driver.Nationality }}</div>
     </div>

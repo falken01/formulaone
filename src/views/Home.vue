@@ -1,8 +1,8 @@
 <template>
   <div class="home">
-    <preloader v-show="this.loadingData"/>
+    <preloader v-show="this.loading" />
     <div class="drivers">
-      <div v-for="driver in drivers" :key="driver.id">
+      <div v-for="driver in allDrivers" :key="driver.id">
         <card :driver="driver" />
       </div>
     </div>
@@ -11,23 +11,23 @@
 
 <script>
 // @ is an alias to /src
-import axios from "axios";
 import Card from "../components/card";
 import Preloader from "../components/preloader";
+import { mapGetters } from 'vuex'
 export default {
   name: "Home",
-  components: {Preloader, Card },
+  components: { Preloader, Card },
+  data() {
+    return {
+      loading: false,
+    };
+  },
   computed: {
-    drivers(){
-      return store.state.drivers
-    }
+    ...mapGetters('driver',['allDrivers'])
   },
   created() {
-    axios
-      .get("http://localhost:8000/all")
-      .then(res => (store.commit('setDrivers') = res.data))
-      .catch(err => alert(err));
-      this.loadingData=false;
+    this.loading = true;
+    this.$store.dispatch("driver/fetchDrivers").then(() => (this.loading = false));
   }
 };
 </script>
@@ -43,7 +43,6 @@ export default {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 6em;
-
 }
 @media (max-width: 1360px) {
   .drivers {

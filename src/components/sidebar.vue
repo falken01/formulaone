@@ -1,5 +1,6 @@
 <template>
   <div class="sidebar">
+    <small-navbar />
     <h3>Search Bar</h3>
     <label>
       <input @input="$emit('typing',searchValue)" v-model="searchValue" type="text" />
@@ -12,11 +13,12 @@
 
 <script>
 import RacerData from "./racerData";
+import SmallNavbar from "./SmallNavbar";
 
 export default {
   name: "sidebar",
   props: ["drivers"],
-  components: { RacerData },
+  components: {SmallNavbar, RacerData },
   data() {
     return {
       searchValue: ""
@@ -28,6 +30,7 @@ export default {
 <style lang="scss" scoped>
 .sidebar {
   position: absolute;
+  right: 0;
   z-index: 2;
   height: 100vh;
   width: 300px;
@@ -42,8 +45,6 @@ export default {
     background: #fff;
     height: 25px;
     margin-bottom: 15px;
-  }
-  .innerSidebar {
   }
 }
 </style>
